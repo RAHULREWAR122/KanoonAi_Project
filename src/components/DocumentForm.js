@@ -1,40 +1,39 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import style  from "../Style/from.module.css"
 // import Typography from 'typography'
 function DocumentForm() {
   // TODO: Implement form state and submission
   const [formData , setFormData] = useState({
-      name :'',
+      title :'',
       content : '',
       type :''
   })
   const [error , setError] = useState({
-    name :'',
+    title :'',
     content:"",
     type :""
 
   })
 
   const validateStep = () => {
-    const { name, content , type } = formData;
+    const { title, content , type } = formData;
     let valid = true;
     const newErrors = {
-      name: '',
+      title: '',
       content :'',
       type :""
     };
-    if (!name.trim()) {
-      newErrors.name = 'Name is required';
+    if (!title.trim()) {
+      newErrors.title = 'Title is required';
       valid = false;
-    }else if(!content.trim()){
+    } if(!content.trim()){
        newErrors.content = "Content is required"  
        valid = false;
-      }else{
+    }
        if(!type.trim()){
         newErrors.type = "Type is required"
         valid = false;
-        
-       }
     }
     setError(newErrors);
     return valid;
@@ -53,7 +52,7 @@ function DocumentForm() {
       if (!validateStep()) {
         return;
       }
-     
+      console.log(formData)     
   }
 
 
@@ -67,13 +66,13 @@ function DocumentForm() {
         variant="outlined"
         fullWidth
         margin="normal"
-        name='name'
-        value={formData.name}
+        name='title'
+        value={formData.title}
         onChange={handleChange}
         required
         // TODO: Add value and onChange
       />
-      {error.name && <p className="text-red-500 text-xs italic">{error.name}</p>}
+      {error.title && <p className={style.errorMsg}>{error.title}</p>}
       <TextField
         label="Content"
         variant="outlined"
@@ -87,6 +86,7 @@ function DocumentForm() {
         required
         // TODO: Add value and onChange
       />
+      {error.content && <p className={style.errorMsg}>{error.content}</p>}
       <TextField
         label="Document Type"
         variant="outlined"
@@ -98,6 +98,7 @@ function DocumentForm() {
         required
         // TODO: Add value and onChange
       />
+      {error.type && <p className={style.errorMsg}>{error.type}</p>}
       <Button onClick={handleSubmit} variant="contained" color="primary" sx={{ mt: 2 }}>
         Add Document
       </Button>
