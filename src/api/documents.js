@@ -1,6 +1,7 @@
 const API_URL = 'http://localhost:3001/api';
 
 export const fetchDocuments = async () => {
+   
   // TODO: Implement API call to fetch documents
 };
 
