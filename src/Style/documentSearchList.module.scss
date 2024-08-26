@@ -1,0 +1,26 @@
+.list_show{
+   position: absolute;
+   width: 100%;
+   backdrop-filter: blur(6px);
+   padding: 5px;
+   top: 74px;
+   border-radius: 4px;
+   max-height: 200px;
+   overflow-y: scroll;
+   z-index: 50;
+   border: 1px solid green;
+  
+   .list_data{
+      transition: all .3s ease-in-out;
+      cursor: pointer;
+      border-bottom: 1px solid #d0dce8;
+      &:hover{
+        border-radius: 6px;
+        background: #e3e7e5;
+      }
+      
+  }  
+}
+
+
+

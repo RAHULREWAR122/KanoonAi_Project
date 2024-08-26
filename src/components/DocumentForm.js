@@ -1,72 +1,90 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
-import style  from "../Style/from.module.css"
-// import Typography from 'typography'
+import React, { useState } from "react";
+import { TextField, Button, Box } from "@mui/material";
+import style from "../Style/from.module.scss";
+import { createDocument } from "../api/documents";
+import { Typography } from "@mui/material";
+
 function DocumentForm() {
   // TODO: Implement form state and submission
-  const [formData , setFormData] = useState({
-      title :'',
-      content : '',
-      type :''
-  })
-  const [error , setError] = useState({
-    title :'',
-    content:"",
-    type :""
-
-  })
-
-  const validateStep = () => {
-    const { title, content , type } = formData;
+  // form data
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    type: "",
+  });
+  // error messages
+  const [error, setError] = useState({
+    title: "",
+    content: "",
+    type: "",
+  });
+ 
+  // check data is valid or not and check in inputs user type or not something
+  const checkValidData = () => {
+    const { title, content, type } = formData;
     let valid = true;
     const newErrors = {
-      title: '',
-      content :'',
-      type :""
+      title: "",
+      content: "",
+      type: "",
     };
+    // if title not type in input box then show error
     if (!title.trim()) {
-      newErrors.title = 'Title is required';
+      newErrors.title = "Title is required";
       valid = false;
-    } if(!content.trim()){
-       newErrors.content = "Content is required"  
-       valid = false;
     }
-       if(!type.trim()){
-        newErrors.type = "Type is required"
-        valid = false;
+    // if content not type in input box then show error
+    if (!content.trim()) {
+      newErrors.content = "Content is required";
+      valid = false;
+    }
+    // if type of document not typed in input box then show error
+    if (!type.trim()) {
+      newErrors.type = "Type is required";
+      valid = false;
     }
     setError(newErrors);
     return valid;
-  }
-  
-  const handleChange = (e)=>{
-      const {name , value} = e.target;
-      setFormData({
-         ...formData,
-         [name] : value
-      }) 
-  
+  };
+
+  // handle change inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  // submit data
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    //first check data is valid or not
+    if (!checkValidData()) {
+      return;
     }
-    const handleSubmit = (e)=>{
-      e.preventDefault();
-      if (!validateStep()) {
-        return;
-      }
-      console.log(formData)     
-  }
+    // send data
+    await createDocument(formData) 
+    // after submit data set form data inputs empty
+    setFormData({
+     ...formData,
+     title :'',
+     content :'',
+     type :'' 
+   }) 
+  };
 
-
+  // return JSX
   return (
     <Box component="form" noValidate autoComplete="off" sx={{ mt: 4 }}>
-      {/* <Typography variant="h6" component="h2" gutterBottom>
+      <Typography variant="h6" component="h2" gutterBottom>
         Add New Document
-      </Typography> */}
+      </Typography>
       <TextField
         label="Title"
         variant="outlined"
         fullWidth
         margin="normal"
-        name='title'
+        name="title"
         value={formData.title}
         onChange={handleChange}
         required
@@ -80,7 +98,7 @@ function DocumentForm() {
         multiline
         rows={4}
         margin="normal"
-        name='content'
+        name="content"
         value={formData.content}
         onChange={handleChange}
         required
@@ -92,14 +110,19 @@ function DocumentForm() {
         variant="outlined"
         fullWidth
         margin="normal"
-        name='type'
+        name="type"
         value={formData.type}
         onChange={handleChange}
         required
         // TODO: Add value and onChange
       />
       {error.type && <p className={style.errorMsg}>{error.type}</p>}
-      <Button onClick={handleSubmit} variant="contained" color="primary" sx={{ mt: 2 }}>
+      <Button
+        onClick={handleSubmit}
+        variant="contained"
+        color="primary"
+        sx={{ mt: 2 }}
+      >
         Add Document
       </Button>
     </Box>
