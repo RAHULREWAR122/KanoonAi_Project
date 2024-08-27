@@ -49,7 +49,8 @@ function DocumentView() {
     animate={{ x: 0  , opacity: 1}}
     exit={{ x: -100 , opacity: 0 }}
     transition={{ duration: 0.6 }}     
-   >
+   >  
+      
       <Button onClick={()=>navigate(-1)} variant="outlined" >
         <IoArrowBackSharp size={22}/>
       </Button>

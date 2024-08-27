@@ -4,6 +4,7 @@ import { searchDocuments } from "../api/documents";
 import style from "../Style/documentSearchList.module.scss";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {Button} from "@mui/material";
 
 function DocumentSearch() {
   // TODO: Implement search functionality
@@ -46,11 +47,31 @@ function DocumentSearch() {
   const handleNavigate = (id) => {
     navigate(`/view/${id}`);
   };
+
+  const handleLogout = ()=>{
+      sessionStorage.removeItem("user")
+      navigate(`/login`);
+      
+  }
+  const userName = JSON.parse(sessionStorage.getItem("user"));  
    
   // return JSX
   return (
     <div style={{ position: "relative" }}>
       {" "}
+      {userName &&  
+      <Typography variant="h4" component="h2" color="primary" textAlign="center" gutterBottom>
+        {userName?.name} 
+      </Typography>
+      } 
+      <Button
+        onClick={handleLogout}
+        variant="contained"
+        color="primary"
+        sx={{ mt: 2 }}
+      >
+        LogOut
+      </Button> 
       <TextField
         label="Search Documents"
         variant="outlined"

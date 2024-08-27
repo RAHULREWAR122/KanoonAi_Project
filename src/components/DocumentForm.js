@@ -19,6 +19,7 @@ function DocumentForm() {
     type: "",
   });
  
+  
   // check data is valid or not and check in inputs user type or not something
   const checkValidData = () => {
     const { title, content, type } = formData;
@@ -62,6 +63,7 @@ function DocumentForm() {
     if (!checkValidData()) {
       return;
     }
+
     // send data
     await createDocument(formData) 
     // after submit data set form data inputs empty

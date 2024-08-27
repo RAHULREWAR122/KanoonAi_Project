@@ -25,11 +25,9 @@ export const createDocument = async (document) => {
 };
 
 export const searchDocuments = async (query) => {
-  console.log(query)
   try {
     const req = await axios.get(`${API_URL}/document/search?q=${query}`);
     if (req.data) {
-      console.log("data is ", req.data);
       return req.data;
     }
   } catch (error) {
