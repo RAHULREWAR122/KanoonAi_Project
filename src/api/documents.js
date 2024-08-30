@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api";
+const API_URL = "https://backend-vert-eta.vercel.app/api";
 
 export const fetchDocuments = async () => {
   try {
